@@ -21,7 +21,13 @@ A GitHub Action workflow to send Discord notifications via webhook when a new re
     *   Set the value to your Discord webhook URL.  **Important:** Make sure the webhook URL is valid!
 3.  **(Optional) Customize the workflow.** Edit the `.github/workflows/release-notification.yml` file to modify the embed content, color, or add additional fields.  See the Discord API documentation for available options: [https://discord.com/developers/docs/resources/channel#embed-object](https://discord.com/developers/docs/resources/channel#embed-object)
 
-4.  **Create a Release.**  Whenever you create and publish a new release in your repository, this workflow will automatically trigger and send a notification to your Discord channel.
+4.  **(Optional) Setup Vercel Deployment.** This template comes with a `vercel.json` configuration file which enables the build to be automatically deployed to a Vercel project. To use this feature, setup the project under the Vercel platform.
+
+5.  **(Optional) Customize EditorConfig.** Customize your code and text editors using the settings specified under the `.editorconfig` file.
+
+6.  **(Optional) Modify Default Settings.** If needed, modify the settings under the `settings.example.json` file. This can be used to modify settings for your personal fork, and for users in development.
+
+7.  **Create a Release.**  Whenever you create and publish a new release in your repository, this workflow will automatically trigger and send a notification to your Discord channel.
 
 ## `.github/workflows/release-notification.yml` Explanation
 
@@ -58,10 +64,18 @@ After a new release, your Discord channel will receive an embed like this:
 
 ![Image](https://image.pollinations.ai/prompt/example%20Discord%20embed%20message%20for%20a%20release,%20with%20title,%20description,%20url,%20footer,%20author%20and%20commit%20fields,%20clean%20and%20professional%20design)
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+
+## Code of Conduct
+
+This project adheres to the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to <your-email@example.com>.
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for our security policy.
+
 ## License
 
 [MIT License](LICENSE)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit pull requests.

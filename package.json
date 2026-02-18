@@ -1,0 +1,21 @@
+{
+  "name": "discord-release-notifier",
+  "version": "1.0.0",
+  "description": "A GitHub Action to send Discord release notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "discord",
+    "release",
+    "notification"
+  ],
+  "author": "render437",
+  "license": "MIT",
+  "dependencies": {
+
+  }
+}
