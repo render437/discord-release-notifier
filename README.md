@@ -1,6 +1,6 @@
 # Discord Release Notifier
 
-[![Actions Status](https://github.com/<YOUR_GITHUB_USERNAME>/discord-release-notifier/workflows/Discord%20Release%20Notification/badge.svg)](https://github.com/<YOUR_GITHUB_USERNAME>/discord-release-notifier/actions)
+[![Actions Status](https://github.com/render437/discord-release-notifier/workflows/Discord%20Release%20Notification/badge.svg)](https://github.com/render437/discord-release-notifier/actions)
 
 A GitHub Action workflow to send Discord notifications via webhook when a new release is published.
 
@@ -29,34 +29,62 @@ A GitHub Action workflow to send Discord notifications via webhook when a new re
 
 7.  **Create a Release.**  Whenever you create and publish a new release in your repository, this workflow will automatically trigger and send a notification to your Discord channel.
 
-## `.github/workflows/release-notification.yml` Explanation
+---
 
-This file defines the GitHub Actions workflow.  Here's a breakdown:
+### `.github/workflows/release-notification.yml Example`
 
-*   **`name: Discord Release Notification`**:  The name of the workflow, displayed in the GitHub Actions tab.
-*   **`on: release: types: [published]`**:  The workflow is triggered when a new release is *published*.
-*   **`jobs: notify:`**: Defines a job named "notify" to encapsulate the workflow's steps.
-*   **`runs-on: ubuntu-latest`**: Specifies the workflow runs on the latest version of Ubuntu.
-*   **`steps:`**:  A list of steps to execute.
-    *   **`name: Send Discord Notification`**:  A descriptive name for this step.
-    *   **`env:`**: Defines environment variables:
-        *   `DISCORD_WEBHOOK`:  Retrieved from the repository's secret.
-        *   `RELEASE_NAME`, `RELEASE_URL`, `RELEASE_BODY`, `REPO_NAME`: Extract release information from the `github.event` context.  The `github.event` contains data about the event triggering the workflow.
-        *   `COMMIT_SHA`: The SHA of the commit tagged by the release.
-        *   `ACTOR`: The GitHub username of the person creating the release.
-    *   **`run: |`**:  Executes a shell script.
-        *   `PAYLOAD=$(cat <<EOF ... EOF)`:  Creates the JSON payload for the Discord embed.  Uses a "here document" for easier multi-line string definition.
-        *   The JSON payload contains:
-            *   `embeds`: An array (with one element in this case) representing the Discord embed.
-            *   `title`: The release name.
-            *   `url`: A link to the release page.
-            *   `description`: The release notes.
-            *   `color`: The color of the embed (5814783 is a light blue/aqua).
-            *   `footer`:  The repository name.
-            *   `fields`:  Additional fields in the embed:
-                *   `Created By`: The GitHub username of the person creating the release.
-                *   `Commit`: The SHA of the commit tagged by the release.
-        *   `curl -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK"`: Sends the JSON payload to Discord.  The `-H` flag sets the Content-Type header, and `-d` specifies the request body (the JSON payload).
+```yaml
+name: Discord Release Notification
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+          REPO_NAME: ${{ github.repository }}
+          COMMIT_SHA: ${{ github.sha }} # Add Commit SHA for the release commit.
+          ACTOR: ${{ github.actor }}      # Username of the person creating release.
+        run: |
+          # Construct the JSON payload for the embed
+          PAYLOAD=$(cat <<EOF
+          {
+            "embeds": [{
+              "title": "New Release: $RELEASE_NAME",
+              "url": "$RELEASE_URL",
+              "description": "$RELEASE_BODY",
+              "color": 5814783, # A nice light blue/aqua color,
+              "footer": {
+                "text": "Release from $REPO_NAME"
+              },
+              "fields": [
+                {
+                  "name": "Created By",
+                  "value": "$ACTOR",
+                  "inline": true
+                },
+                {
+                  "name": "Commit",
+                  "value": "$COMMIT_SHA",
+                  "inline": true
+                }
+              ]
+            }]
+          }
+          EOF
+          )
+
+          # Send the message to Discord via webhook
+          curl -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK"
+```
 
 ## Example Discord Message
 
@@ -70,7 +98,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to th
 
 ## Code of Conduct
 
-This project adheres to the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to <your-email@example.com>.
+This project adheres to the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to 437render@gmail.com
 
 ## Security
 
