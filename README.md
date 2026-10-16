@@ -90,7 +90,7 @@ jobs:
 
 After a new release, your Discord channel will receive an embed like this:
 
-![Image](https://image.pollinations.ai/prompt/example%20Discord%20embed%20message%20for%20a%20release,%20with%20title,%20description,%20url,%20footer,%20author%20and%20commit%20fields,%20clean%20and%20professional%20design)
+![Image](https://image.pollinations.ai/prompt/example%20Discord%20embed%20message%20for%20a%20release,%20with%20title,%20description,%20url,%20footer,%20author%20commit%20fields,%20clean%20and%20professional%20design)
 
 ## Contributing
 
